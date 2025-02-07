@@ -1,2 +1,2 @@
-# flaskBank
-minimal flask/web application of a simple banking app using python
+# ºyBank
+minimal terminal application of a simple banking app using python
