@@ -145,7 +145,7 @@ class TerminalInterface:
             for acc in accounts:
                 print(f"Account ID: {acc.account_id}, Type: {acc.__class__.__name__}, Balance: {acc.get_balance()}")
             account_id = int(input("Enter the account ID to withdraw from: "))
-            amount = float(input("Enter the amount to withdraw: "))
+            amount = Decimal(input("Enter the amount to withdraw: "))
             account = next(acc for acc in accounts if acc.account_id == account_id)
             account.withdraw(amount)
             self.bank.db.execute(
@@ -165,7 +165,7 @@ class TerminalInterface:
             for acc in accounts:
                 print(f"Account ID: {acc.account_id}, Type: {acc.__class__.__name__}, Balance: {acc.get_balance()}")
             account_id = int(input("Enter the account ID to transfer from: "))
-            amount = float(input("Enter the amount to transfer: "))
+            amount = Decimal(input("Enter the amount to transfer: "))
             recipient_email = input("Enter recipient's email: ")
             recipient = self.bank.db.fetchall("SELECT * FROM customers WHERE email=%s", (recipient_email,))
             if recipient:
@@ -191,5 +191,4 @@ class TerminalInterface:
         else:
             print("No accounts found!")
         sleep(1)
-
 
