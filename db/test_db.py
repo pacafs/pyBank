@@ -1,6 +1,6 @@
 # test_db_connection.py
-from db.database import Database
-from db.config import DATABASE_CONFIG
+from database import Database
+from config import DATABASE_CONFIG
 
 try:
     db = Database()

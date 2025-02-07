@@ -1,7 +1,7 @@
 # database.py
 import psycopg2
 from psycopg2 import sql
-from db.config import DATABASE_CONFIG
+from config import DATABASE_CONFIG
 from typing import List
 
 class Database:
