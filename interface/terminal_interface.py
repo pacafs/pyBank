@@ -2,6 +2,7 @@ import sys
 from time import sleep
 from getpass import getpass
 from models.customer import Customer
+from decimal import Decimal  # Import Decimal to convert input strings to Decimal objects
 
 class TerminalInterface:
     def __init__(self, bank):
@@ -124,7 +125,7 @@ class TerminalInterface:
             for acc in accounts:
                 print(f"Account ID: {acc.account_id}, Type: {acc.__class__.__name__}, Balance: {acc.get_balance()}")
             account_id = int(input("Enter the account ID to deposit into: "))
-            amount = float(input("Enter the amount to deposit: "))
+            amount = Decimal(input("Enter the amount to deposit: "))
             account = next(acc for acc in accounts if acc.account_id == account_id)
             account.deposit(amount)
             self.bank.db.execute(
