@@ -61,7 +61,7 @@ def update_account_balance(account_id, balance):
     query = "UPDATE accounts SET balance=%s WHERE account_id=%s"
     execute(query, (balance, account_id))
 
-def create_customer(name, email, password):
+def build_customer(name, email, password):
     """
     Inserts a new customer into the database and returns the customer ID.
     """
@@ -72,7 +72,7 @@ def create_customer(name, email, password):
     result = fetchone(query, (name, email, password))
     return result[0]
 
-def create_account(customer_id, acc_type, initial_balance):
+def build_account(customer_id, acc_type, initial_balance):
     """
     Inserts a new account into the database and returns the account ID.
     """
@@ -90,7 +90,7 @@ def make_transaction(sender_id, receiver_id, amount):
     query = "INSERT INTO transactions (sender_id, receiver_id, amount, timestamp) VALUES (%s, %s, %s, %s)"
     execute(query, (sender_id, receiver_id, amount, datetime.datetime.now()))
 
-def apply_interest():
+def calculate_interest():
     """
     Applies interest to all savings accounts by selecting them and updating their balances.
     """

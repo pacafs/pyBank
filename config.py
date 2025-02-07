@@ -1,11 +1,14 @@
-# config.py
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Default to local database, but override if deployed (Render)
 DATABASE_CONFIG = {
-    "dbname": os.getenv("DB_NAME", "flaskBank"),  # Default: local DB
-    "user": os.getenv("DB_USER", "paca"),
-    "password": os.getenv("DB_PASSWORD", "barcelos1"),
-    "host": os.getenv("DB_HOST", "localhost"),
-    "port": os.getenv("DB_PORT", "5432"),
+    "dbname": os.environ["DB_NAME"],  # Default: local DB
+    "user": os.environ["DB_USER"],
+    "password": os.environ["DB_PASSWORD"],
+    "host": os.environ["DB_HOST"],
+    "port": os.environ["DB_PORT"],
 }
+
