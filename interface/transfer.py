@@ -14,7 +14,7 @@ def transfer_menu(bank, terminal_interface):
                 if 1 <= selection <= len(accounts):
                     break
                 else:
-                    print("Invalid selection, please choose a valid number from the list.")
+                    print("Invalid seletion, please choose a valid nr from the list.")
             except ValueError:
                 print("Please enter a valid number.")
         sender_account = accounts[selection - 1]
@@ -35,10 +35,10 @@ def transfer_menu(bank, terminal_interface):
                     bank.process_transaction(sender_account.customer_id, recipient_id, float(amount))
                     print(f"Transferred {amount} to {recipient_email}. New balance: {sender_account.get_balance()}")
                 else:
-                    print("Insufficient balance!")
+                    print("❌ No Funds!")
             else:
-                print("Recipient has no account to receive transfers!")
+                print("❌ Recipient has no account")
         else:
-            print("Recipient not found!")
+            print("❌ Recipient not found!")
     else:
-        print("No accounts found!")
+        print("❌ No accounts found!")
