@@ -1,16 +1,19 @@
 from db.database import Database
 from bank import Bank
 from interface.terminal_interface import TerminalInterface
+
 def main():
     db = Database()
     bank = Bank(db)
 
     print("\n🏦 Welcome to the Banking Application!\n")
 
+
     db = Database()  # Use your PostgreSQL database here
     bank = Bank(db)
     terminal = TerminalInterface(bank)
-    terminal.main_menu() # Start the menu
+    # Start the menu
+    terminal.main_menu()  
 
     # # Creating two customers
     # customer1 = bank.create_customer("Alice", "alice@example.com", "password123")
@@ -52,3 +55,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
