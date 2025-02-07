@@ -15,12 +15,11 @@ def set_db(connection):
 
 def execute(query, params=()):
     """
-    Executes a query on the global database connection and commits the changes.
+    Executes a query on the global database connection.
     """
     if db is None:
         raise Exception("Database connection not initialized. Please call set_db() first.")
     db.cursor.execute(query, params)
-    db.conn.commit()
 
 def fetchone(query, params=()):
     """
@@ -101,4 +100,5 @@ def calculate_interest():
         new_balance = balance + balance * 0.03
         update_query = "UPDATE accounts SET balance=%s WHERE account_id=%s"
         execute(update_query, (new_balance, account_id))
+
 

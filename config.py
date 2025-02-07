@@ -1,10 +1,8 @@
 import os
 from urllib.parse import urlparse
+from dotenv import load_dotenv
 
-# Load variables from .env file only in development.
-if os.environ.get("FLASK_ENV", "development") == "development":
-    from dotenv import load_dotenv
-    load_dotenv(dotenv_path=".env", override=True)
+load_dotenv(dotenv_path=".env", override=True)
 
 def get_database_config():
     """
