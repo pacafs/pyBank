@@ -12,7 +12,7 @@ class Customer:
         self.password = password
 
     def get_accounts(self, db: Database) -> List:
-        accounts_data = db.fetchall("SELECT * FROM accounts WHERE customer_id=?", (self.customer_id,))
+        accounts_data = db.fetchall("SELECT * FROM accounts WHERE customer_id=%s", (self.customer_id,))
         accounts = []
         for account_data in accounts_data:
             account_id, customer_id, acc_type, balance = account_data
@@ -21,3 +21,5 @@ class Customer:
             elif acc_type == "savings":
                 accounts.append(SavingsAccount(account_id, customer_id, balance, interest_rate=0.03))
         return accounts
+    
+    
