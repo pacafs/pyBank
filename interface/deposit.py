@@ -1,6 +1,6 @@
 from decimal import Decimal
 from time import sleep
-from db.queries import execute
+from db.queries import update_account_balance
 
 def deposit_menu(bank, terminal_interface):
     terminal_interface.clear_screen()
@@ -21,11 +21,9 @@ def deposit_menu(bank, terminal_interface):
         selected_account = accounts[selection - 1]
         amount = Decimal(input("Enter the amount to deposit: "))
         selected_account.deposit(amount)
-        execute(
-            "UPDATE accounts SET balance=%s WHERE account_id=%s",
-            (selected_account.get_balance(), selected_account.account_id)
-        )
+        update_account_balance(selected_account.account_id, selected_account.get_balance())
         print(f"Deposited {amount} into account {selected_account.account_id}. New balance: {selected_account.get_balance()}")
     else:
         print("No accounts found!")
     sleep(1)
+

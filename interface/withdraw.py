@@ -22,7 +22,6 @@ def withdraw_menu(bank, terminal_interface):
         selected_account = accounts[selection - 1]
         amount = Decimal(input("Enter the amount to withdraw: "))
         selected_account.withdraw(amount)
-        update_account_balance(selected_account.account_id, selected_account.get_balance())
         print(f"Withdrew {amount} from account {selected_account.account_id}. New balance: {selected_account.get_balance()}")
     else:
         print("No accounts found!")
