@@ -22,4 +22,3 @@ class Customer:
             elif acc_type == "savings":
                 accounts.append(SavingsAccount(account_id, customer_id, balance, interest_rate=0.03))
         return accounts
-    
