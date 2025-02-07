@@ -2,7 +2,7 @@
 from typing import List
 from models.checking_account import CheckingAccount
 from models.savings_account import SavingsAccount
-from db.database import Database
+from db.queries import fetchall
 
 class Customer:
     def __init__(self, customer_id: int, name: str, email: str, password: str):
@@ -11,8 +11,8 @@ class Customer:
         self.email = email
         self.password = password
 
-    def get_accounts(self, db: Database) -> List:
-        accounts_data = db.fetchall("SELECT * FROM accounts WHERE customer_id=%s", (self.customer_id,))
+    def get_accounts(self) -> List:
+        accounts_data = fetchall("SELECT * FROM accounts WHERE customer_id=%s", (self.customer_id,))
         accounts = []
         for account_data in accounts_data:
             account_id, customer_id, acc_type, balance = account_data

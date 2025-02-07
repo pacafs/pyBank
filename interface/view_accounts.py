@@ -1,7 +1,7 @@
 def view_accounts_menu(bank, terminal_interface):
     terminal_interface.clear_screen()
     print("Your Accounts:")
-    accounts = terminal_interface.current_user.get_accounts(bank.db)
+    accounts = terminal_interface.current_user.get_accounts()
     if accounts:
         for acc in accounts:
             print(f"Account ID: {acc.account_id}, Type: {acc.__class__.__name__}, Balance: {acc.get_balance()}")

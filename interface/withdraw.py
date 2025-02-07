@@ -1,10 +1,11 @@
 from decimal import Decimal
 from time import sleep
+from db.queries import update_account_balance
 
 def withdraw_menu(bank, terminal_interface):
     terminal_interface.clear_screen()
     print("Withdraw Money:")
-    accounts = terminal_interface.current_user.get_accounts(bank.db)
+    accounts = terminal_interface.current_user.get_accounts()
     if accounts:
         # Display a selection menu for accounts
         for index, acc in enumerate(accounts, start=1):
@@ -21,11 +22,11 @@ def withdraw_menu(bank, terminal_interface):
         selected_account = accounts[selection - 1]
         amount = Decimal(input("Enter the amount to withdraw: "))
         selected_account.withdraw(amount)
-        bank.db.execute(
-            "UPDATE accounts SET balance=%s WHERE account_id=%s",
-            (selected_account.get_balance(), selected_account.account_id)
-        )
+        update_account_balance(selected_account.account_id, selected_account.get_balance())
         print(f"Withdrew {amount} from account {selected_account.account_id}. New balance: {selected_account.get_balance()}")
     else:
         print("No accounts found!")
     sleep(1)
+
+    
+    

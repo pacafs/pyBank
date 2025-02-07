@@ -1,5 +1,6 @@
 # models/checking_account.py
 from models.bank_account import BankAccount
+from db.queries import update_account_balance
 
 class CheckingAccount(BankAccount):
     def __init__(self, account_id: int, customer_id: int, balance: float, overdraft_limit: float):
@@ -12,6 +13,7 @@ class CheckingAccount(BankAccount):
     def withdraw(self, amount: float):
         if self.balance - amount >= -self.overdraft_limit:
             self.balance -= amount
+            update_account_balance(self.account_id, self.balance)
         else:
             print("Insufficient funds")
 
