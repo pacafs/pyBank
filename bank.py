@@ -10,26 +10,36 @@ class Bank:
         self.db = db
 
     def create_customer(self, name: str, email: str, password: str) -> Customer:
-        self.db.execute("INSERT INTO customers (name, email, password) VALUES (%s, %s, %s)", 
-                       (name, email, password))
-        
-        customer_id = self.db.cursor.lastrowid
+        # Using RETURNING clause to fetch the auto-generated customer_id
+        insert_query = (
+            "INSERT INTO customers (name, email, password) VALUES (%s, %s, %s) "
+            "RETURNING customer_id"
+        )
+        self.db.cursor.execute(insert_query, (name, email, password))
+        customer_id = self.db.cursor.fetchone()[0]
+        self.db.conn.commit()
         return Customer(customer_id, name, email, password)
 
     def create_account(self, customer_id: int, acc_type: str, initial_balance: float):
-        self.db.execute("INSERT INTO accounts (customer_id, type, balance) VALUES (%s, %s, %s)",
-                       (customer_id, acc_type, initial_balance))
-        
-        account_id = self.db.cursor.lastrowid
+        # Using RETURNING clause to fetch the auto-generated account_id
+        insert_query = (
+            "INSERT INTO accounts (customer_id, type, balance) VALUES (%s, %s, %s) "
+            "RETURNING account_id"
+        )
+        self.db.cursor.execute(insert_query, (customer_id, acc_type, initial_balance))
+        account_id = self.db.cursor.fetchone()[0]
+        self.db.conn.commit()
+
         if acc_type == "checking":
             return CheckingAccount(account_id, customer_id, initial_balance, overdraft_limit=1000)
         elif acc_type == "savings":
             return SavingsAccount(account_id, customer_id, initial_balance, interest_rate=0.03)
 
     def process_transaction(self, sender_id: int, receiver_id: int, amount: float):
-        self.db.execute("INSERT INTO transactions (sender_id, receiver_id, amount, timestamp) VALUES (%s, %s, %s, %s)",
-                       (sender_id, receiver_id, amount, datetime.now()))
-        
+        self.db.execute(
+            "INSERT INTO transactions (sender_id, receiver_id, amount, timestamp) VALUES (%s, %s, %s, %s)",
+            (sender_id, receiver_id, amount, datetime.now()),
+        )
         print("Transaction processed.")
 
     def apply_interest(self):
