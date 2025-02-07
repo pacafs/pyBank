@@ -1,4 +1,4 @@
-from db.database import Database
+from database import Database
 
 def migrate():
     db = Database()
