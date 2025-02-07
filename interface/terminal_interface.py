@@ -15,10 +15,10 @@ class TerminalInterface:
 
     def show_welcome_message(self):
         self.clear_screen()
-        print("Welcome to the Banking Application!")
+        print("🌟🌟🌟 Welcome to the Banking App! 🌟🌟🌟")
+        print("===============================================")
         sleep(1)
 
     def main_menu(self):
         main_menu(self.bank, self)
         
-

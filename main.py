@@ -11,6 +11,7 @@ def main():
 
     bank = Bank()
     terminal = TerminalInterface(bank)
+    
     # Start the menu
     terminal.main_menu()  
 

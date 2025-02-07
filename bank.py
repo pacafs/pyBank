@@ -2,11 +2,10 @@
 from models.customer import Customer
 from models.checking_account import CheckingAccount
 from models.savings_account import SavingsAccount
-from db.queries import create_customer, create_account, process_transaction, apply_interest
+from db.queries import create_customer, create_account, make_transaction, apply_interest
 
 class Bank:
     def __init__(self):
-        # With queries handling DB operations, we don't need to store a db connection here.
         pass
 
     def create_customer(self, name: str, email: str, password: str) -> Customer:
@@ -21,7 +20,7 @@ class Bank:
             return SavingsAccount(account_id, customer_id, initial_balance, interest_rate=0.03)
 
     def process_transaction(self, sender_id: int, receiver_id: int, amount: float):
-        process_transaction(sender_id, receiver_id, amount)
+        make_transaction(sender_id, receiver_id, amount)
         print("Transaction processed.")
 
     def apply_interest(self):

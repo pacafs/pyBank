@@ -40,6 +40,20 @@ def fetchall(query, params=()):
     db.cursor.execute(query, params)
     return db.cursor.fetchall()
 
+def get_customer_by_email(email):
+    """
+    Retrieves customer data by email.
+    """
+    query = "SELECT * FROM customers WHERE email=%s"
+    return fetchall(query, (email,))
+
+def get_accounts_by_customer_id(customer_id):
+    """
+    Retrieves account data for a given customer ID.
+    """
+    query = "SELECT * FROM accounts WHERE customer_id=%s"
+    return fetchall(query, (customer_id,))
+
 def update_account_balance(account_id, balance):
     """
     Updates the balance for a given account.
@@ -69,7 +83,7 @@ def create_account(customer_id, acc_type, initial_balance):
     result = fetchone(query, (customer_id, acc_type, initial_balance))
     return result[0]
 
-def process_transaction(sender_id, receiver_id, amount):
+def make_transaction(sender_id, receiver_id, amount):
     """
     Inserts a new transaction into the database.
     """
@@ -87,3 +101,4 @@ def apply_interest():
         new_balance = balance + balance * 0.03
         update_query = "UPDATE accounts SET balance=%s WHERE account_id=%s"
         execute(update_query, (new_balance, account_id))
+
