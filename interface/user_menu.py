@@ -4,6 +4,7 @@ from .view_accounts import view_accounts_menu
 from .deposit import deposit_menu
 from .withdraw import withdraw_menu
 from .transfer import transfer_menu
+from .view_transactions import view_transactions_menu
 
 def user_menu(bank, terminal_interface):
     while True:
@@ -15,7 +16,8 @@ def user_menu(bank, terminal_interface):
         print("3. 💵  Deposit Money")
         print("4. 💸  Withdraw Money")
         print("5. 🔀  Transfer Money")
-        print("6. 🚪  Logout")
+        print("6. 📜  View Transactions")
+        print("7. 🚪  Logout")
         choice = input("✨ Choose an option: ")
         if choice == '1':
             create_account_menu(bank, terminal_interface)
@@ -28,6 +30,8 @@ def user_menu(bank, terminal_interface):
         elif choice == '5':
             transfer_menu(bank, terminal_interface)
         elif choice == '6':
+            view_transactions_menu(bank, terminal_interface)
+        elif choice == '7':
             print("🚪 Logging out...")
             terminal_interface.current_user = None
             break

@@ -101,4 +101,17 @@ def calculate_interest():
         update_query = "UPDATE accounts SET balance=%s WHERE account_id=%s"
         execute(update_query, (new_balance, account_id))
 
+def get_transactions_by_customer(customer_id):
+    """
+    Retrieves all transactions where the customer is either sender or receiver.
+    Returns the transactions ordered by timestamp in descending order.
+    """
+    query = (
+        "SELECT transaction_id, sender_id, receiver_id, amount, timestamp "
+        "FROM transactions "
+        "WHERE sender_id=%s OR receiver_id=%s "
+        "ORDER BY timestamp DESC"
+    )
+    return fetchall(query, (customer_id, customer_id))
+
 
