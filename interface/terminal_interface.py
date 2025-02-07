@@ -122,17 +122,26 @@ class TerminalInterface:
         print("Deposit Money:")
         accounts = self.current_user.get_accounts(self.bank.db)
         if accounts:
-            for acc in accounts:
-                print(f"Account ID: {acc.account_id}, Type: {acc.__class__.__name__}, Balance: {acc.get_balance()}")
-            account_id = int(input("Enter the account ID to deposit into: "))
+            # Display a selection menu for accounts
+            for index, acc in enumerate(accounts, start=1):
+                print(f"{index}. Account ID: {acc.account_id}, Type: {acc.__class__.__name__}, Balance: {acc.get_balance()}")
+            while True:
+                try:
+                    selection = int(input("Select the account number to deposit into: "))
+                    if 1 <= selection <= len(accounts):
+                        break
+                    else:
+                        print("Invalid selection, please choose a valid number from the list.")
+                except ValueError:
+                    print("Please enter a valid number.")
+            selected_account = accounts[selection - 1]
             amount = Decimal(input("Enter the amount to deposit: "))
-            account = next(acc for acc in accounts if acc.account_id == account_id)
-            account.deposit(amount)
+            selected_account.deposit(amount)
             self.bank.db.execute(
                 "UPDATE accounts SET balance=%s WHERE account_id=%s",
-                (account.get_balance(), account.account_id)
+                (selected_account.get_balance(), selected_account.account_id)
             )
-            print(f"Deposited {amount} into account {account_id}. New balance: {account.get_balance()}")
+            print(f"Deposited {amount} into account {selected_account.account_id}. New balance: {selected_account.get_balance()}")
         else:
             print("No accounts found!")
         sleep(1)
